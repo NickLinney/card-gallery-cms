@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My SPA</title>
+  <style>
+    /* Styling for the card */
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      margin: 10px;
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      vertical-align: top;
+      cursor: pointer;
+    }
+
+    /* Styling for the plus icon */
+    .card.plus:before {
+      content: "+";
+      font-size: 48px;
+      line-height: 1;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="cards"></div>
+
+  <script>
+    const cards = document.getElementById("cards");
+    let cardIndex = 0;
+
+    // Function to add a new card to the page
+    function addCard() {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.dataset.index = cardIndex++;
+      cards.insertBefore(card, plusCard);
+  </script>
+  
+</body>
+</html>
