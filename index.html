@@ -1,46 +1,95 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>My SPA</title>
-  <style>
-    /* Styling for the card */
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      padding: 10px;
-      margin: 10px;
-      display: inline-block;
-      width: 200px;
-      height: 200px;
-      text-align: center;
-      vertical-align: top;
-      cursor: pointer;
-    }
+  <head>
+    <title>My SPA</title>
+    <style>
+      /* Styling for the card */
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        margin: 10px;
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        text-align: center;
+        vertical-align: top;
+        cursor: pointer;
+        position: relative;
+      }
 
-    /* Styling for the plus icon */
-    .card.plus:before {
-      content: "+";
-      font-size: 48px;
-      line-height: 1;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <div id="cards"></div>
+      /* Styling for the plus icon */
+      .card.plus:before {
+        content: "+";
+        font-size: 48px;
+        line-height: 1;
+        font-weight: bold;
+      }
 
-  <script>
-    const cards = document.getElementById("cards");
-    let cardIndex = 0;
+      /* Styling for the X icon */
+      .card .delete:before {
+        content: "X";
+        font-size: 24px;
+        line-height: 1;
+        font-family: sans-serif;
+        font-weight: bold;
+        color: red;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cards"></div>
 
-    // Function to add a new card to the page
-    function addCard() {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.dataset.index = cardIndex++;
-      cards.insertBefore(card, plusCard);
-  </script>
-  
-</body>
+    <script>
+      const cards = document.getElementById("cards");
+      let cardIndex = 0;
+
+      // Create the "plus" card and add it to the page
+      const plusCard = document.createElement("div");
+      plusCard.classList.add("card", "plus");
+      plusCard.addEventListener("click", addCard);
+      cards.appendChild(plusCard);
+
+      // Function to add a new card to the page
+      function addCard() {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.index = cardIndex++;
+        card.addEventListener("mouseenter", addDeleteIcon);
+        card.addEventListener("mouseleave", removeDeleteIcon);
+        cards.appendChild(card);
+      }
+
+      // Function to add the delete icon to a card
+      function addDeleteIcon(event) {
+        const card = event.target;
+        if (!card.classList.contains("plus")) {
+          const deleteIcon = document.createElement("div");
+          deleteIcon.classList.add("delete");
+          deleteIcon.addEventListener("click", removeCard);
+          card.appendChild(deleteIcon);
+        }
+      }
+
+      // Function to remove the delete icon from a card
+      function removeDeleteIcon(event) {
+        const card = event.target;
+        const deleteIcon = card.querySelector(".delete");
+        if (deleteIcon) {
+          card.removeChild(deleteIcon);
+        }
+      }
+
+      // Function to remove a card from the page
+      function removeCard(event) {
+        const card = event.target.parentNode;
+        cards.removeChild(card);
+      }
+    </script>
+  </body>
 </html>
